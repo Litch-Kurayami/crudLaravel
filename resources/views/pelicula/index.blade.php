@@ -19,7 +19,16 @@ Mostrar la lista de las peliculas
             <td>{{ $pelicula->nombre }}</td>
             <td>{{ $pelicula->anioEstreno }}</td>
             <td>{{ $pelicula->descripcion }}</td>
-            <td>Editar | Borrar </td>
+            <td>Editar | 
+                
+            <form action="{{ url('/pelicula/'.$pelicula->id) }}" method="post">
+            @csrf
+            {{ method_field('DELETE') }}
+            <input type="submit" onclick="return confirm('¿Quieres borrar la pelicula?')" value="Borrar">
+
+            </form>
+        
+            </td>
         </tr>
         @endforeach
     </tbody>

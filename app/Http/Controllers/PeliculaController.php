@@ -88,8 +88,10 @@ class PeliculaController extends Controller
      * @param  \App\Models\Pelicula  $pelicula
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pelicula $pelicula)
+    public function destroy($id)
     {
         //
+        Pelicula::destroy($id);
+        return redirect('pelicula');
     }
 }
