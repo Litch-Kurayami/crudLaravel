@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PeliculaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+/* Route::get('/pelicula', function () {
+    return view('pelicula.index');
+});
+Route::get('/pelicula/create',[PeliculaController::class, 'create']); */
+
+Route::resource('pelicula', PeliculaController::class);
