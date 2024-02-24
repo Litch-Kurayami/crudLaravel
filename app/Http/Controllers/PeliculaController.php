@@ -15,7 +15,8 @@ class PeliculaController extends Controller
     public function index()
     {
         //
-        return view('pelicula.index');
+        $datos['peliculas']=Pelicula::paginate(5);
+        return view('pelicula.index',$datos);
     }
 
     /**
