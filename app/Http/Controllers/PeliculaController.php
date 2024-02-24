@@ -40,6 +40,9 @@ class PeliculaController extends Controller
         //
         //$datosPelicula = request()->all();
         $datosPelicula = request()->except('_token');
+        if($request->hasFile('foto')){
+            $datosPelicula['foto']=$request->file('foto')->store('uploads','public');
+        }
         Pelicula::insert($datosPelicula);
          return response()->json($datosPelicula);
     }
