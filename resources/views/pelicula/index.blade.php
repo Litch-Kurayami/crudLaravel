@@ -1,4 +1,3 @@
-Mostrar la lista de las peliculas
 <table class="table table-light">
     <thead class="thead-light">
         <tr>
@@ -19,7 +18,12 @@ Mostrar la lista de las peliculas
             <td>{{ $pelicula->nombre }}</td>
             <td>{{ $pelicula->anioEstreno }}</td>
             <td>{{ $pelicula->descripcion }}</td>
-            <td>Editar | 
+            <td>
+                
+            <a href="{{ url('/pelicula/'.$pelicula->id.'/edit') }}">
+                Edititar
+            </a>
+            | 
                 
             <form action="{{ url('/pelicula/'.$pelicula->id) }}" method="post">
             @csrf

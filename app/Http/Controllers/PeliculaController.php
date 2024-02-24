@@ -65,9 +65,11 @@ class PeliculaController extends Controller
      * @param  \App\Models\Pelicula  $pelicula
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pelicula $pelicula)
+    public function edit($id)
     {
         //
+        $pelicula=Pelicula::findOrFail($id);
+        return view('pelicula.edit', compact('pelicula'));
     }
 
     /**
