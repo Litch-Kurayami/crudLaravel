@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Pelicula;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Storage; 
+
 class PeliculaController extends Controller
 {
     /**
@@ -79,9 +81,20 @@ class PeliculaController extends Controller
      * @param  \App\Models\Pelicula  $pelicula
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pelicula $pelicula)
+    public function update(Request $request, $id)
     {
         //
+        $datosPelicula = request()->except(['_token','_method']);
+
+        if($request->hasFile('foto')){
+            $pelicula=Pelicula::findOrFail($id);
+            Storage::delete('public/'.$pelicula->foto);
+            $datosPelicula['foto']=$request->file('foto')->store('uploads','public');
+        }
+
+        Pelicula::where('id','=',$id)->update($datosPelicula);
+        $pelicula=Pelicula::findOrFail($id);
+        return view('pelicula.edit', compact('pelicula'));
     }
 
     /**
