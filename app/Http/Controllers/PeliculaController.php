@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Pelicula;
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Storage; 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class PeliculaController extends Controller
 {
@@ -47,7 +48,8 @@ class PeliculaController extends Controller
             $datosPelicula['foto']=$request->file('foto')->store('uploads','public');
         }
         Pelicula::insert($datosPelicula);
-         return response()->json($datosPelicula);
+        //return response()->json($datosPelicula);
+        return redirect('pelicula')->with('mensaje','Pelicula agregada con exito');
     }
 
     /**
@@ -105,8 +107,14 @@ class PeliculaController extends Controller
      */
     public function destroy($id)
     {
-        //
+    //
+    $pelicula = Pelicula::findOrFail($id);
+
+    if (Storage::delete('public/'.$pelicula->foto)){
         Pelicula::destroy($id);
-        return redirect('pelicula');
+    }
+
+
+    return redirect('pelicula')->with('mensaje','Pelicula eliminada');
     }
 }

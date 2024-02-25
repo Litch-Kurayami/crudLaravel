@@ -1,3 +1,10 @@
+@if(Session::has('mensaje'))
+{{Session::get('mensaje') }}
+
+@endif
+
+<a href="{{ url('pelicula/create') }}"> Registrar nueva pelicula</a>
+
 <table class="table table-light">
     <thead class="thead-light">
         <tr>
