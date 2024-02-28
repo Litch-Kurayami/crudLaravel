@@ -42,6 +42,23 @@ class PeliculaController extends Controller
     public function store(Request $request)
     {
         //
+
+        $campos=[
+            'nombre'=>'required|string|max:100',
+            'anioEstreno'=>'required|string|max:100',
+            'descripcion'=>'required|string|max:1000',
+            'foto'=>'required|max:10000|mimes:jpeg,png,jpeg'
+        ];
+        $mensaje=[
+            'nombre.required'=>'El nombre de la pelicula es requerido',
+            'descripcion.required'=>'La descripcion de la pelicula es requerida',
+            'foto.required'=>'La portada de la pelicula es requerida',
+            'anioEstreno.required'=>'El año de estreno de la pelicula es requerido'
+        ];
+
+        $this->validate($request, $campos,$mensaje);
+
+
         //$datosPelicula = request()->all();
         $datosPelicula = request()->except('_token');
         if($request->hasFile('foto')){
@@ -85,6 +102,30 @@ class PeliculaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $campos=[
+            'nombre'=>'required|string|max:100',
+            'anioEstreno'=>'required|string|max:100',
+            'descripcion'=>'required|string|max:1000'
+        ];
+        $mensaje=[
+            'nombre.required'=>'El nombre de la pelicula es requerido',
+            'descripcion.required'=>'La descripcion de la pelicula es requerida',
+            'anioEstreno.required'=>'El año de estreno de la pelicula es requerido'
+        ];
+
+        if($request->hasFile('foto')){
+            $campos=[
+                'foto'=>'required|max:10000|mimes:jpeg,png,jpeg'
+            ];
+
+            $mensaje=[
+                'foto.required'=>'La portada de la pelicula es requerida'
+            ];
+
+        }
+
+        $this->validate($request, $campos,$mensaje);
+
         //
         $datosPelicula = request()->except(['_token','_method']);
 
@@ -96,7 +137,8 @@ class PeliculaController extends Controller
 
         Pelicula::where('id','=',$id)->update($datosPelicula);
         $pelicula=Pelicula::findOrFail($id);
-        return view('pelicula.edit', compact('pelicula'));
+        //return view('pelicula.edit', compact('pelicula'));
+        return redirect('pelicula')->with('mensaje','Pelicula actualizada');        
     }
 
     /**

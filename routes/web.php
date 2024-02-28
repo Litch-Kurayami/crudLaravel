@@ -15,7 +15,7 @@ use App\Http\Controllers\PeliculaController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 /* Route::get('/pelicula', function () {
@@ -23,4 +23,11 @@ Route::get('/', function () {
 });
 Route::get('/pelicula/create',[PeliculaController::class, 'create']); */
 
-Route::resource('pelicula', PeliculaController::class);
+Route::resource('pelicula', PeliculaController::class)->middleware('auth');
+Auth::routes(['register' => false, 'reset' => false]);
+
+Route::get('/home', [PeliculaController::class, 'index'])->name('home');
+
+Route::group(['middleware' => 'auth'], function (){
+    Route::get('/', [PeliculaController::class, 'index'])->name('home');
+});
